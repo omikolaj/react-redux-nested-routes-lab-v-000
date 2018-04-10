@@ -7,6 +7,10 @@ import PetsShow from './PetsShow';
 import PetsList from '../components/PetsList';
 
 class PetsPage extends Component {
+  constructor({props}){
+    super(props)
+    
+  }
 
   componentDidMount() {
     this.props.fetchPets();
@@ -14,7 +18,16 @@ class PetsPage extends Component {
 
   render() {
     return (
-      <div>Pets Page</div>
+      <div>
+        <PetsList pets={this.props.pets} />
+        <Switch>
+          <Route path={`${this.props.match.url}/new`} component={PetsNew} />
+          <Route path={`${this.props.match.url}/:petID`} component={PetsShow} />
+          <Route exact path={this.props.match.url} render={() => (
+            <h3>Please select a Pet from the list.</h3>
+          )}/>       
+        </Switch>
+      </div>
     )
   }
 };
